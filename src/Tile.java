@@ -25,6 +25,31 @@ public class Tile extends GCompound {
     private GLine SWall;
     private GLine WWall;
 
+    public Tile(Maze maze, int row, int col){
+
+        this(maze, row, col, false, false, false, false);
+
+    }
+
+    public Tile(Maze maze, int row, int col, boolean nw, boolean ew, boolean sw, boolean ww){
+
+        this.maze = maze;
+        this.row = row;
+        this.col = col;
+
+        //initialize boolean array
+        wall = new boolean[4];
+
+        wall[NORTH]= nw;
+        wall[EAST] = ew;
+        wall[SOUTH] = sw;
+        wall[WEST] = ww;
+
+        // the GRect represents the tile itself
+        
+
+    }
+
 
     /**
      * Makes the correct walls visible.

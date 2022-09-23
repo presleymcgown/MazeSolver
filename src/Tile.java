@@ -11,15 +11,15 @@ public class Tile extends GCompound {
     public static final int SOUTH = 2;
     public static final int WEST = 3;
 
-    public static final double TILEW = 50;
-    public static final double TILEH = 50;
+    public static final double TILEW = 20;
+    public static final double TILEH = 20;
 
     private boolean[] wall; // keeps track of whether there is a wall at a given index
     private Maze maze; // the Maze object that this tile belongs to
     private int row; // the row in the maze that this Tile is in
     private int col; // the column in the maze that this Tile is in
 
-    private GRect body;
+    private GRect rect;
     private GLine NWall;
     private GLine EWall;
     private GLine SWall;
@@ -46,6 +46,24 @@ public class Tile extends GCompound {
         wall[WEST] = ww;
 
         // the GRect represents the tile itself
+        rect = new GRect(1, 1, TILEW - 1 , TILEH - 1);
+        rect.setColor(Color.WHITE);
+        add(rect);
+
+        // the GLines that represent the wall
+        NWall = new GLine(0, 0, TILEW, 0);
+        add(NWall);
+
+        EWall = new GLine(TILEW, 0, TILEW, TILEH);
+        add(EWall);
+
+        SWall = new GLine(TILEW, TILEH, 0, TILEH);
+        add(SWall);
+
+        WWall = new GLine(0, TILEH, 0, 0);
+        add(WWall);
+
+        drawTile();
         
 
     }
@@ -56,6 +74,19 @@ public class Tile extends GCompound {
      */
     public void drawTile(){
 
+        NWall.setVisible(false);
+        EWall.setVisible(false);
+        SWall.setVisible(false);
+        WWall.setVisible(false);
+
+        // set the visibility of the walls based on whether there is a wall in that direction or not
+        NWall.setVisible(hasWall(NORTH));
+        EWall.setVisible(hasWall(EAST));
+        SWall.setVisible(hasWall(SOUTH));
+        WWall.setVisible(hasWall(WEST));
+
+        this.repaint();
+
     }
 
     /**
@@ -64,6 +95,8 @@ public class Tile extends GCompound {
      * @return the opposite diction value
      */
     public int getOppDir(int direction){
+
+        return (direction + 2) % 4;
 
     }
 
@@ -74,6 +107,8 @@ public class Tile extends GCompound {
      */
     public boolean hasWall(int direction){
 
+        return wall[direction];
+
     }
 
     /**
@@ -82,6 +117,11 @@ public class Tile extends GCompound {
      */
     public void fillColor(Color color){
 
+        rect.setColor(color);
+        rect.setFillColor(color);
+        rect.setFilled(true);
+
+
     }
 
     /**
@@ -89,7 +129,44 @@ public class Tile extends GCompound {
      * @param direction the wall to target
      * @param status true to turn on wall, false to turn wall off
      */
-    public void setWall(int direction, boolean status){
+    public void setWall(int direction, boolean status) {
+
+        // if we get "true" for status,
+        // if there is not already a wall...
+        // set the wall array in that direction true
+        // check if there is a neighbor in that direction
+        // set the neighbor's wall true as well
+        // draw the tile
+        // otherwise do all that, but turn the wall off instead
+
+        if (status) {
+
+            if (!hasWall(direction)) {
+
+                wall[direction] = status;
+
+                if (hasNeighbor(direction)) {
+                    getNeighbor(direction).setWall(getOppDir(direction), status);
+                }
+
+            }
+
+            drawTile();
+
+        }else{
+            if (hasWall(direction)) {
+
+                wall[direction] = status;
+
+                if (hasNeighbor(direction)) {
+                    getNeighbor(direction).setWall(getOppDir(direction), status);
+                }
+
+            }
+
+            drawTile();
+
+        }
 
     }
 
@@ -100,6 +177,25 @@ public class Tile extends GCompound {
      */
     public Tile getNeighbor(int direction){
 
+        switch (direction){
+
+            case NORTH:
+                return maze.getTile(row - 1, col);
+
+            case EAST:
+                return maze.getTile(row, col + 1);
+
+            case SOUTH:
+                return maze.getTile(row + 1, col);
+
+            case WEST:
+                return maze.getTile(row, col - 1);
+
+            default:
+                return null;
+
+        }
+
     }
 
     /**
@@ -109,12 +205,9 @@ public class Tile extends GCompound {
      */
     public boolean hasNeighbor(int direction){
 
-    }
-
-    public static void main(String[] args) {
+        return getNeighbor(direction) != null;
 
     }
-
 
 
 }

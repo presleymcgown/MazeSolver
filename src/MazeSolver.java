@@ -50,7 +50,14 @@ public class MazeSolver extends GraphicsProgram {
     // visited.add(), visited.contains()
     private void solve(Tile startTile, Tile goalTile, ArrayList<Tile> visited){
 
+        //handle base case
 
+         //general cases:
+            //add the tile you are on to the list
+            //look north. If there is a possible path:
+                // set the fill color of your current tile to something
+                //move to that north tile
+                // se fill color to white
 
     }
 

@@ -62,7 +62,7 @@ public class MazeSolver extends GraphicsProgram {
         //handle base case
         if(visited.contains(goalTile)){
             Dialog.showMessage("The maze was solved!");
-            return;
+            System.exit(0);
         }
 
          //general cases:

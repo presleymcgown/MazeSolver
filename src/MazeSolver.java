@@ -78,45 +78,46 @@ public class MazeSolver extends GraphicsProgram {
 
             visited.add(startTile);
 
-            if (!startTile.hasWall(Tile.NORTH)) {
+                if (!startTile.hasWall(Tile.NORTH)) {
 
-                startTile.fillColor(new Color(140, 157, 197, 171));
-                solve(startTile.getNeighbor(Tile.NORTH), goalTile, visited);
-                startTile.fillColor(Color.WHITE);
-                pause(pause);
-
-
-            }
-
-            if (!startTile.hasWall(Tile.EAST)) {
-
-                startTile.fillColor(new Color(140, 157, 197, 171));
-                solve(startTile.getNeighbor(Tile.EAST), goalTile, visited);
-                startTile.fillColor(Color.WHITE);
-                pause(pause);
+                    startTile.fillColor(new Color(140, 157, 197, 171));
+                    solve(startTile.getNeighbor(Tile.NORTH), goalTile, visited);
+                    startTile.fillColor(Color.WHITE);
+                    pause(pause);
 
 
-            }
+                }
 
-            if (!startTile.hasWall(Tile.SOUTH)) {
+                if (!startTile.hasWall(Tile.EAST)) {
 
-                startTile.fillColor(new Color(140, 157, 197, 171));
-                solve(startTile.getNeighbor(Tile.SOUTH), goalTile, visited);
-                startTile.fillColor(Color.WHITE);
-                pause(pause);
-
-
-            }
-
-            if (!startTile.hasWall(Tile.WEST)) {
-
-                startTile.fillColor(new Color(140, 157, 197, 171));
-                solve(startTile.getNeighbor(Tile.WEST), goalTile, visited);
-                startTile.fillColor(Color.WHITE);
-                pause(pause);
+                    startTile.fillColor(new Color(140, 157, 197, 171));
+                    solve(startTile.getNeighbor(Tile.EAST), goalTile, visited);
+                    startTile.fillColor(Color.WHITE);
+                    pause(pause);
 
 
-            }
+                }
+
+                if (!startTile.hasWall(Tile.SOUTH)) {
+
+                    startTile.fillColor(new Color(140, 157, 197, 171));
+                    solve(startTile.getNeighbor(Tile.SOUTH), goalTile, visited);
+                    startTile.fillColor(Color.WHITE);
+                    pause(pause);
+
+
+                }
+
+                if (!startTile.hasWall(Tile.WEST)) {
+
+                    startTile.fillColor(new Color(140, 157, 197, 171));
+                    solve(startTile.getNeighbor(Tile.WEST), goalTile, visited);
+                    startTile.fillColor(Color.WHITE);
+                    pause(pause);
+
+
+                }
+
 
         }
 
